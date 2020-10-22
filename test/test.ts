@@ -4,8 +4,13 @@ import tempy = require('tempy');
 import jetpack = require('fs-jetpack');
 import execa = require('execa');
 
-const json2tsvPath = getBinPathSync({ name: 'json2tsv' });
-const tsv2jsonPath = getBinPathSync({ name: 'tsv2json' });
+const json2tsvPath = getBinPathSync({ name: 'json2tsv' })!;
+const tsv2jsonPath = getBinPathSync({ name: 'tsv2json' })!;
+
+test.serial('Defines binaries', t => {
+	t.truthy(json2tsvPath);
+	t.truthy(tsv2jsonPath);
+});
 
 const json = [
 	['foo', 'bar'],
@@ -20,7 +25,7 @@ test('json2tsv', async t => {
 	const result = await execa.node(json2tsvPath, ['foo.json'], { cwd: dir.cwd() });
 	t.is(result.exitCode, 0);
 	t.is(dir.exists('foo.json.tsv'), 'file');
-	t.is(dir.read('foo.json.tsv'), quotedTsv);
+	t.is(dir.read('foo.json.tsv'), unquotedTsv);
 });
 
 test('json2tsv --force works correctly', async t => {
@@ -39,7 +44,7 @@ test('json2tsv --force works correctly', async t => {
 
 	const result = await execa.node(json2tsvPath, ['foo.json', '--force'], { cwd: dir.cwd() });
 	t.is(result.exitCode, 0);
-	t.is(dir.read('foo.json.tsv'), quotedTsv);
+	t.is(dir.read('foo.json.tsv'), unquotedTsv);
 });
 
 test('json2tsv throws on invalid input', async t => {
@@ -64,6 +69,6 @@ test('tsv2json', async t => {
 	t.is(result.exitCode, 0);
 	t.is(dir.exists('unquoted.tsv.json'), 'file');
 	t.is(dir.exists('quoted.tsv.json'), 'file');
-	t.deepEqual(JSON.parse(dir.read('unquoted.tsv.json')), json);
-	t.deepEqual(JSON.parse(dir.read('quoted.tsv.json')), json);
+	t.deepEqual(JSON.parse(dir.read('unquoted.tsv.json')!), json);
+	t.deepEqual(JSON.parse(dir.read('quoted.tsv.json')!), json);
 });

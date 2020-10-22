@@ -28,7 +28,8 @@ function _runCli(command: 'json2tsv' | 'tsv2json'): never {
 	`, {
 		flags: {
 			force: {
-				type: 'boolean'
+				type: 'boolean',
+				default: false
 			}
 		}
 	});
@@ -51,7 +52,7 @@ function _runCli(command: 'json2tsv' | 'tsv2json'): never {
 		let result: string;
 
 		if (command === 'json2tsv') {
-			let parsed: any;
+			let parsed: unknown;
 			try {
 				parsed = JSON.parse(contents);
 			} catch {
@@ -73,7 +74,7 @@ function _runCli(command: 'json2tsv' | 'tsv2json'): never {
 		try {
 			workOnExistingFile(path);
 			console.log(chalk`{green [ OK ]} {blue ${name}} -> {green ${name}${targetExtension}}`);
-		} catch (error) {
+		} catch (error: unknown) {
 			absoluteSuccess = false;
 			console.log(chalk`{red [FAIL]} {blue ${name}}: {red ${ensureError(error).message}}`);
 		}
@@ -85,7 +86,7 @@ function _runCli(command: 'json2tsv' | 'tsv2json'): never {
 export function runCli(command: 'json2tsv' | 'tsv2json'): never {
 	try {
 		_runCli(command);
-	} catch (error) {
+	} catch (error: unknown) {
 		die(ensureError(error).message);
 	}
 }
