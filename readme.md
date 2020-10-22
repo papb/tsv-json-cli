@@ -1,4 +1,4 @@
-# tsv-json-cli [![Build Status](https://travis-ci.com/papb/tsv-json-cli.svg?branch=master)](https://travis-ci.com/papb/tsv-json-cli)
+# tsv-json-cli ![Build Status](https://github.com/papb/tsv-json-cli/workflows/CI/badge.svg)
 
 > Convert between TSV and JSON (`string[][]`)
 
