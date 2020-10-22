@@ -42,7 +42,7 @@
 	"dependencies": {
 		"chalk": "^4.1.0",
 		"ensure-error": "^3.0.1",
-		"fs-jetpack": "^3.2.0",
+		"fs-jetpack": "^4.0.0",
 		"meow": "^7.1.1",
 		"tsv-json": "^2.0.0"
 	},
