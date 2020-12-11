@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install --global tsv-json
+$ npm install --global tsv-json-cli
 ```
 
 
